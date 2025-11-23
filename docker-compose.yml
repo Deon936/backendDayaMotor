@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env  # Ini yang akan load SUPABASE_URL, SUPABASE_KEY, dll
+    volumes:
+      - ./uploads:/app/public/uploads  # Persist uploads directory
