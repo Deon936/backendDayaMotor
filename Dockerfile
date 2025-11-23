@@ -1,26 +1,21 @@
-# Use official Node.js runtime as base image
-FROM node:18-alpine
+FROM node:20-alpine
 
-# Set working directory in container
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY package*.json ./
-
-# Install dependencies
+# Copy backend files
+COPY backend/package*.json ./
 RUN npm install
 
-# Copy all backend source code
-COPY . .
+COPY backend/ ./
 
-# Create directory for uploads
+# Create uploads directory
 RUN mkdir -p public/uploads
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Expose the correct port (5000)
+EXPOSE 5000
 
-# Set environment variables
+# Set environment
 ENV NODE_ENV=production
 
-# Start the application
+# Start application
 CMD ["npm", "start"]
