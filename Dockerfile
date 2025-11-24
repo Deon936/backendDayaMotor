@@ -2,20 +2,19 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy backend files
-COPY backend/package*.json ./
-RUN npm install
+RUN apk add --no-cache python3 make g++ bash
 
-COPY backend/ ./
+# Copy package.json untuk install dependencies
+COPY package*.json ./
+RUN npm install --production
 
-# Create uploads directory
+# Copy seluruh source
+COPY . .
+
 RUN mkdir -p public/uploads
 
-# Expose the correct port (5000)
 EXPOSE 5000
 
-# Set environment
 ENV NODE_ENV=production
 
-# Start application
 CMD ["npm", "start"]
